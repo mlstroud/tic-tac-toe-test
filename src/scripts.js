@@ -1,7 +1,7 @@
 var winArraysCount = [0, 0, 0, 0, 0, 0, 0, 0];
 var winArrays = [["1,1","1,2","1,3"], ["2,1","2,2","2,3"], ["3,1","3,2","3,3"], ["1,1","2,2","3,3"], ["1,3","2,2","3,1"], ["1,1","2,1","3,1"], ["1,2","2,2","3,2"], ["1,3","2,3","3,3"]];
 
-scoreCounter = function(checkedBox, buttonCount) {
+var scoreCounter = function(checkedBox, buttonCount) {
   for (i=0; i<winArrays.length; i++) {
     if (winArrays[i].includes(checkedBox)) {
       if (buttonCount%2==1){
@@ -16,7 +16,7 @@ scoreCounter = function(checkedBox, buttonCount) {
   }
 }
 
-resetBoard = function() {
+var resetBoard = function() {
   for(var i = 0; i < winArraysCount.length; i++) {
     winArraysCount[i] = 0;
   }
@@ -27,7 +27,7 @@ resetBoard = function() {
   })
 }
 
-checkWin = function(buttonCount) {
+export var checkWin = function(buttonCount) {
   if(winArraysCount.includes(3)) {
     return "Player 1 Wins!";
   }
@@ -41,30 +41,43 @@ checkWin = function(buttonCount) {
   }
 }
 
+export var findPlayerMark = function(turn) {
+  var output = "";
 
-$(document).ready(function() {
-  var buttonCount = 0;
-  
-    $(".toes:button").click(function() {
-      var checkedBox = $(this).attr("id");
-      $(this).prop("disabled", true);   
-      buttonCount ++;
-      if(buttonCount%2==1) {
-        $(this).text("X");
-      } else {
-        $(this).text("O");
-      }
-      scoreCounter(checkedBox, buttonCount);
-      var winner = checkWin(buttonCount);
+  if(turn % 2 == 1) { 
+    output = "X";
+  } else {
+    output = "O";
+  }
 
-      if(winner){
-        alert(winner);
-        resetBoard();
-        buttonCount = 0;
-      }      
-    });
+  return output;
+}
+
+// var turnListener = function(turn) {
+//   $(".toes:button").click(function() {
+//     var checkedBox = $(this).attr("id");
+//     turn++;
+
+//     $(this).prop("disabled", true);   
+//     $(this).text(findPlayerMark(turn));
+//     scoreCounter(checkedBox, buttonCount);
+//     var winner = checkWin(buttonCount);
+
+//     if(winner){
+//       alert(winner);
+//       resetBoard();
+//       buttonCount = 0;
+//     }      
+//   });
+// }
+
+
+// $(document).ready(function() {
+//   var turn = 0;
+
+//   turnListener(turn);
     
-});
+// });
 
 
 
